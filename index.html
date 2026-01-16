@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Printify Shop</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #111;
+      color: #eee;
+    }
+    header {
+      background: #000;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      margin: 0;
+      color: #22c55e;
+    }
+    nav a {
+      color: #eee;
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover { color: #22c55e; }
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: linear-gradient(135deg, #16a34a, #22c55e);
+      color: #000;
+    }
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 2rem;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    .product {
+      background: #1a1a1a;
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+    }
+    .product img {
+      width: 100%;
+      border-radius: 6px;
+    }
+    .price {
+      color: #22c55e;
+      font-weight: bold;
+    }
+    button {
+      background: #22c55e;
+      border: none;
+      color: #000;
+      padding: 0.6rem 1.2rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover { background: #16a34a; }
+    footer {
+      background: #000;
+      text-align: center;
+      padding: 1rem;
+      color: #777;
+    }
+  </style>
+</head>
+<body id="home">
+
+<header>
+  <h1>Printify</h1>
+  <nav>
+    <a href="#" onclick="scrollToSection('home')">Home</a>
+    <a href="#" onclick="scrollToSection('shop')">Shop</a>
+    <a href="#" onclick="scrollToSection('contact')">Contact</a>
+    <a href="#" onclick="toggleCart()">Cart (<span id="cartCount">0</span>)</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h2>Custom Prints, Made for You</h2>
+  <p>T-Shirts • Hoodies • Mugs • Posters</p>
+</section>
+
+<section class="container" id="shop">
+  <h2>Our Products</h2>
+  <div class="products">
+    <div class="product">
+      <img src="https://via.placeholder.com/300x300" alt="T-shirt" />
+      <h3>Graphic T‑Shirt</h3>
+      <p class="price">$25</p>
+      <button onclick="addToCart('T‑Shirt')">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://via.placeholder.com/300x300" alt="Hoodie" />
+      <h3>Custom Hoodie</h3>
+      <p class="price">$45</p>
+      <button onclick="addToCart('Hoodie')">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://via.placeholder.com/300x300" alt="Mug" />
+      <h3>Printed Mug</h3>
+      <p class="price">$15</p>
+      <button onclick="addToCart('Mug')">Add to Cart</button>
+    </div>
+  </div>
+</section>
+
+<!-- Cart Modal -->
+<div id="cartModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); justify-content:center; align-items:center;">
+  <div style="background:#1a1a1a; padding:2rem; border-radius:8px; width:90%; max-width:400px;">
+    <h2>Your Cart</h2>
+    <ul id="cartItems"></ul>
+    <button onclick="checkout()">Checkout</button>
+    <button onclick="toggleCart()" style="background:#444; margin-left:0.5rem;">Close</button>
+  </div>
+</div>
+
+<section class="container" id="contact">
+  <h2>Contact Us</h2>
+  <p>Email: support@printify.com</p>
+</section>
+
+<footer>
+  <p>© 2026 Printify Shop</p>
+</footer>
+
+<script>
+  let cart = [];
+
+  function addToCart(product) {
+    cart.push(product);
+    document.getElementById('cartCount').innerText = cart.length;
+    alert(product + ' added to cart!');
+  }
+
+  function toggleCart() {
+    const modal = document.getElementById('cartModal');
+    modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+    updateCartUI();
+  }
+
+  function updateCartUI() {
+    const list = document.getElementById('cartItems');
+    list.innerHTML = '';
+    cart.forEach(item => {
+      const li = document.createElement('li');
+      li.textContent = item;
+      list.appendChild(li);
+    });
+  }
+
+  function checkout() {
+    if (cart.length === 0) {
+      alert('Your cart is empty!');
+      return;
+    }
+    alert('Checkout successful! Order placed.');
+    cart = [];
+    document.getElementById('cartCount').innerText = 0;
+    toggleCart();
+  }
+
+  function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
